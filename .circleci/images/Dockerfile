@@ -9,6 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get install --no-install-recommends -y \
         python3 \
         python3-pip \
+        python3-dev \
         python3-setuptools \
         openjdk-11-jdk
 
