@@ -11,6 +11,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
         python3-pip \
         python3-dev \
         python3-setuptools \
+        python3-wheel \
+        build-essential \
         openjdk-11-jdk
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
