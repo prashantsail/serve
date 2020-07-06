@@ -2,6 +2,8 @@ version: 2.1
 
 jobs:
     build:
+      docker:
+        - image: prashantsail/pytorch-serve-build
       steps:
         - checkout
         - run:
