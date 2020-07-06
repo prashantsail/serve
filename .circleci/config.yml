@@ -9,6 +9,10 @@ jobs:
         - run:
             name: Build pytorch serve
             command: python setup.py bdist_wheel --release --universal
+        - store_artifacts:
+            name: Store gradle testng results
+            path: frontend/server/build/reports/tests/test
+
 
 workflows:
   version: 2
