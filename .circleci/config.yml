@@ -10,17 +10,17 @@ executors:
 
 
 commands:
-  attach-mms-workspace:
-    description: "Attach the MMS directory which was saved into workspace"
+  attach-torchserve-workspace:
+    description: "Attach the torchserve directory which was saved into workspace"
     steps:
       - attach_workspace:
           at: .
 
-  install-mms-server:
-    description: "Install MMS server from a wheel"
+  install-torchserve:
+    description: "Install torchserve from a wheel"
     steps:
       - run:
-          name: Install MMS
+          name: Install torchserve
           command: pip install dist/*.whl
 
   exeucute-api-tests:
@@ -32,7 +32,7 @@ commands:
         default: management
     steps:
       - run:
-          name: Start MMS, Execute << parameters.collection >> API Tests, Stop MMS
+          name: Start torchserve, Execute << parameters.collection >> API Tests, Stop torchserve
           command: .circleci/scripts/linux_test_api.sh << parameters.collection >>
 
 
@@ -61,7 +61,7 @@ jobs:
           type: executor
       executor: << parameters.executor >>
       steps:
-        - attach-mms-workspace
+        - attach-torchserve-workspace
         - run:
             name: Execute python lint and unit tests
             command: .circleci/scripts/linux_test_python.sh
@@ -76,8 +76,8 @@ jobs:
           type: executor
       executor: << parameters.executor >>
       steps:
-        - attach-mms-workspace
-        - install-mms-server
+        - attach-torchserve-workspace
+        - install-torchserve
         - exeucute-api-tests:
             collection: management
         - exeucute-api-tests:
@@ -94,17 +94,17 @@ jobs:
           type: executor
       executor: << parameters.executor >>
       steps:
-        - attach-mms-workspace
-        - install-mms-server
+        - attach-torchserve-workspace
+        - install-torchserve
         - run:
-            name: Start MMS, Execute benchmark tests, Stop MMS
+            name: Start torchserve, Execute benchmark tests, Stop torchserve
             command: .circleci/scripts/linux_test_benchmark.sh
         - store_artifacts:
             name: Store server logs from benchmark tests
             path: logs/
         - store_artifacts:
             name: Store Benchmark Latency resnet-18 results
-            path: /tmp/MMSBenchmark/out/latency/resnet-18/report/
+            path: /tmp/torchserve-benchmark/out/latency/resnet-18/report/
             destination: benchmark-latency-resnet-18
 
     modelarchiver:

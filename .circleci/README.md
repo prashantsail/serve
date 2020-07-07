@@ -1,8 +1,8 @@
 # Pytorch Serve CircleCI build
-Pytorch Serve uses CircleCI for builds. This folder contains the config and scripts that are needed for CircleCI.
+TorchServe uses CircleCI for builds. This folder contains the config and scripts that are needed for CircleCI.
 
 ## config.yml
-_config.yml_ contains Pytorch Serve's build logic which will be used by CircleCI.
+_config.yml_ contains TorchServe's build logic which will be used by CircleCI.
 
 ## Workflows and Jobs
 Currently, following _workflows_ are available -
@@ -27,7 +27,7 @@ Instead of using inline commands inside _config.yml_, job steps are configured a
 This is easier for maintenance and reduces chances of error in config.yml
 
 ## images
-Pytorch serve uses customized docker image for its CircleCI build.    
+TorchServe uses customized docker image for its CircleCI build.    
 We have published the docker image on docker hub for code build
 * prashantsail/pytorch-serve-build
 
@@ -35,7 +35,7 @@ Following file in the _images_ folder is used to create the docker image
 * Dockerfile - Dockerfile for prashantsail/pytorch-serve-build
 
 ## Local CircleCI cli
-To make it easy for developers to debug build issues locally, Pytorch serve supports CircleCI cli for running a job in a container on your machine.
+To make it easy for developers to debug build issues locally, TorchServe supports CircleCI cli for running a job in a container on your machine.
 
 #### Dependencies
 1. CircleCI cli ([Quick Install](https://circleci.com/docs/2.0/local-cli/#quick-installation))

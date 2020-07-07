@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_DIR="tests/api"
+BASE_DIR="test"
 MODEL_STORE_DIR="$BASE_DIR/model_store"
 
 ARTIFACTS_BASE_DIR="$BASE_DIR/artifacts"
@@ -8,8 +8,8 @@ ARTIFACTS_MANAGEMENT_DIR="$ARTIFACTS_BASE_DIR/management"
 ARTIFACTS_INFERENCE_DIR="$ARTIFACTS_BASE_DIR/inference"
 ARTIFACTS_HTTPS_DIR="$ARTIFACTS_BASE_DIR/https"
 
-MMS_CONSOLE_LOG_FILE="mms_console.log"
-MMS_CONFIG_FILE_HTTPS="$BASE_DIR/resources/config.properties"
+TS_CONSOLE_LOG_FILE="ts_console.log"
+TS_CONFIG_FILE_HTTPS="$BASE_DIR/resources/config.properties"
 
 POSTMAN_ENV_FILE="$BASE_DIR/postman/environment.json"
 POSTMAN_COLLECTION_MANAGEMENT="$BASE_DIR/postman/management_api_test_collection.json"
@@ -19,18 +19,18 @@ POSTMAN_DATA_FILE_INFERENCE="$BASE_DIR/postman/inference_data.json"
 
 REPORT_FILE="report.html"
 
-start_mms_server() {
-  multi-model-server --start --model-store $1 >> $2 2>&1
+start_ts() {
+  torchserve --start --model-store $1 >> $2 2>&1
   sleep 10
 }
 
-start_mms_secure_server() {
-  multi-model-server --start --mms-config $MMS_CONFIG_FILE_HTTPS --model-store $1 >> $2 2>&1
+start_ts_secure() {
+  torchserve --start --ts-config $TS_CONFIG_FILE_HTTPS --model-store $1 >> $2 2>&1
   sleep 10
 }
 
-stop_mms_server() {
-  multi-model-server --stop
+stop_ts() {
+  torchserve --stop
 }
 
 move_logs(){
@@ -39,32 +39,32 @@ move_logs(){
 }
 
 trigger_management_tests(){
-  start_mms_server $MODEL_STORE_DIR $MMS_CONSOLE_LOG_FILE
+  start_ts $MODEL_STORE_DIR $TS_CONSOLE_LOG_FILE
   newman run -e $POSTMAN_ENV_FILE $POSTMAN_COLLECTION_MANAGEMENT \
              -r cli,html --reporter-html-export $ARTIFACTS_MANAGEMENT_DIR/$REPORT_FILE --verbose
   local EXIT_CODE=$?
-  stop_mms_server
-  move_logs $MMS_CONSOLE_LOG_FILE $ARTIFACTS_MANAGEMENT_DIR
+  stop_ts
+  move_logs $TS_CONSOLE_LOG_FILE $ARTIFACTS_MANAGEMENT_DIR
   return $EXIT_CODE
 }
 
 trigger_inference_tests(){
-  start_mms_server $MODEL_STORE_DIR $MMS_CONSOLE_LOG_FILE
+  start_ts $MODEL_STORE_DIR $TS_CONSOLE_LOG_FILE
   newman run -e $POSTMAN_ENV_FILE $POSTMAN_COLLECTION_INFERENCE -d $POSTMAN_DATA_FILE_INFERENCE \
              -r cli,html --reporter-html-export $ARTIFACTS_INFERENCE_DIR/$REPORT_FILE --verbose
   local EXIT_CODE=$?
-  stop_mms_server
-  move_logs $MMS_CONSOLE_LOG_FILE $ARTIFACTS_INFERENCE_DIR
+  stop_ts
+  move_logs $TS_CONSOLE_LOG_FILE $ARTIFACTS_INFERENCE_DIR
   return $EXIT_CODE
 }
 
 trigger_https_tests(){
-  start_mms_secure_server $MODEL_STORE_DIR $MMS_CONSOLE_LOG_FILE
+  start_ts_secure $MODEL_STORE_DIR $TS_CONSOLE_LOG_FILE
   newman run --insecure -e $POSTMAN_ENV_FILE $POSTMAN_COLLECTION_HTTPS \
              -r cli,html --reporter-html-export $ARTIFACTS_HTTPS_DIR/$REPORT_FILE --verbose
   local EXIT_CODE=$?
-  stop_mms_server
-  move_logs $MMS_CONSOLE_LOG_FILE $ARTIFACTS_HTTPS_DIR
+  stop_ts
+  move_logs $TS_CONSOLE_LOG_FILE $ARTIFACTS_HTTPS_DIR
   return $EXIT_CODE
 }
 
