@@ -105,8 +105,7 @@ jobs:
             path: logs/
         - store_artifacts:
             name: Store Benchmark Latency resnet-18 results
-            path: /tmp/torchserve-benchmark/out/latency/resnet-18/report/
-            destination: benchmark-latency-resnet-18
+            path: /tmp/TSBenchmark
 
     modelarchiver:
       parameters:
