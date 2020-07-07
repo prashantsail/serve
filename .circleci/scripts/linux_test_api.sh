@@ -31,6 +31,7 @@ start_ts_secure() {
 
 stop_ts() {
   torchserve --stop
+  sleep 10
 }
 
 move_logs(){
