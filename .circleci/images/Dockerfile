@@ -13,9 +13,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
         python3-setuptools \
         python3-wheel \
         build-essential \
-        openjdk-11-jdk \
-        nodejs \
-        npm
+        openjdk-11-jdk
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
@@ -39,7 +37,17 @@ RUN pip install \
         pytest-mock \
         pytest-cov
 
-# Install API test dependencies
+# Install Benchmark Dependencies
+RUN pip install \
+        pillow \
+        pandas
+
+
+# Install NodeJS
+RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - \
+    && apt-get install -y nodejs
+
+# Install API tests dependencies
 RUN npm install -g \
         newman \
         newman-reporter-html
