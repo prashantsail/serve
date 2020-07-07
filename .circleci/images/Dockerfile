@@ -60,7 +60,7 @@ RUN cd /opt \
     && tar -xzf apache-jmeter-5.3.tgz \
     && cd apache-jmeter-5.3 \
     && ln -s /opt/apache-jmeter-5.3/bin/jmeter /usr/local/bin/jmeter \
-    && curl -o lib/ext/jmeter-plugins-manager-1.4.jar https://jmeter-plugins.org/get/ \
-    && curl -o lib/cmdrunner-2.2.jar http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar \
+    && curl --location -o lib/ext/jmeter-plugins-manager-1.4.jar https://jmeter-plugins.org/get/ \
+    && curl --location -o lib/cmdrunner-2.2.jar http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar \
     && java -cp lib/ext/jmeter-plugins-manager-1.4.jar org.jmeterplugins.repository.PluginManagerCMDInstaller \
     && bin/PluginsManagerCMD.sh install jpgc-synthesis=2.1,jpgc-filterresults=2.1,jpgc-mergeresults=2.1,jpgc-cmd=2.1,jpgc-perfmon=2.1
