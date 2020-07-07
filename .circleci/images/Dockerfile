@@ -13,10 +13,14 @@ RUN DEBIAN_FRONTEND=noninteractive \
         python3-setuptools \
         python3-wheel \
         build-essential \
-        openjdk-11-jdk
+        openjdk-11-jdk \
+        nodejs \
+        npm
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+
+ENV PATH ~/.local/bin/:$PATH
 
 # Install Torch Dependencies
 RUN pip install --no-cache-dir \
@@ -25,7 +29,7 @@ RUN pip install --no-cache-dir \
         torchtext \
         sentencepiece \
         psutil \
-        future
+        future \
 
 # Install Pytest Dependencies
 RUN pip install \
@@ -34,3 +38,8 @@ RUN pip install \
         pylint==2.4.4 \
         pytest-mock \
         pytest-cov
+
+# Install API test dependencies
+RUN npm install -g \
+        newman \
+        newman-reporter-html
