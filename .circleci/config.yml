@@ -34,6 +34,7 @@ commands:
       - run:
           name: Start torchserve, Execute << parameters.collection >> API Tests, Stop torchserve
           command: .circleci/scripts/linux_test_api.sh << parameters.collection >>
+          when: always
 
 
 jobs:
