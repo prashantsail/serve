@@ -86,7 +86,7 @@ jobs:
             collection: https
         - store_artifacts:
             name: Store server logs and test results
-            path: tests/api/artifacts/
+            path: test/artifacts/
 
     benchmark:
       parameters:
