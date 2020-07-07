@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED TRUE
 RUN DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
+        curl \
         python3 \
         python3-pip \
         python3-dev \
