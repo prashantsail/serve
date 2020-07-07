@@ -29,7 +29,7 @@ RUN pip install --no-cache-dir \
         torchtext \
         sentencepiece \
         psutil \
-        future \
+        future
 
 # Install Pytest Dependencies
 RUN pip install \
