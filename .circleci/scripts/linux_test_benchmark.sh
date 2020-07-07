@@ -6,10 +6,15 @@ mkdir -p /home/linuxbrew/.linuxbrew/Homebrew/Cellar/jmeter/5.3/libexec/
 ln -s /opt/apache-jmeter-5.3/lib/ /home/linuxbrew/.linuxbrew/Homebrew/Cellar/jmeter/5.3/libexec/lib
 ln -s /opt/apache-jmeter-5.3/bin/ /home/linuxbrew/.linuxbrew/Homebrew/Cellar/jmeter/5.3/libexec/bin
 
-# Start TS and redirect console ouptut and errors to a log file
-torchserve --start --model-store=/tmp/ts_store > ts_console.log 2>&1
-sleep 30
+# Create a model store directory
+MODEL_STORE_DIR="model_store"
+mkdir $MODEL_STORE_DIR
 
+# Start TS and redirect console ouptut and errors to a log file
+torchserve --start --model-store=$MODEL_STORE_DIR > ts_console.log 2>&1
+sleep 10
+
+# Go to benchmarks directory and trigger suite
 cd benchmarks
 python benchmark.py latency --ts http://127.0.0.1:8080
 EXIT_CODE=$?
