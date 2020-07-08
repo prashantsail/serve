@@ -34,6 +34,10 @@ stop_ts() {
   sleep 10
 }
 
+cleanup_model_store(){
+  rm -rf $MODEL_STORE_DIR/*
+}
+
 move_logs(){
   mv $1 logs/
   mv logs/ $2
@@ -46,6 +50,7 @@ trigger_management_tests(){
   local EXIT_CODE=$?
   stop_ts
   move_logs $TS_CONSOLE_LOG_FILE $ARTIFACTS_MANAGEMENT_DIR
+  cleanup_model_store
   return $EXIT_CODE
 }
 
@@ -56,6 +61,7 @@ trigger_inference_tests(){
   local EXIT_CODE=$?
   stop_ts
   move_logs $TS_CONSOLE_LOG_FILE $ARTIFACTS_INFERENCE_DIR
+  cleanup_model_store
   return $EXIT_CODE
 }
 
@@ -66,6 +72,7 @@ trigger_https_tests(){
   local EXIT_CODE=$?
   stop_ts
   move_logs $TS_CONSOLE_LOG_FILE $ARTIFACTS_HTTPS_DIR
+  cleanup_model_store
   return $EXIT_CODE
 }
 
