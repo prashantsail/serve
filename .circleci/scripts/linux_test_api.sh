@@ -20,12 +20,12 @@ POSTMAN_DATA_FILE_INFERENCE="postman/inference_data.json"
 REPORT_FILE="report.html"
 
 start_ts() {
-  torchserve --start --model-store $1 >> $2 2>&1
+  torchserve --ncs --start --model-store $1 >> $2 2>&1
   sleep 10
 }
 
 start_ts_secure() {
-  torchserve --start --ts-config $TS_CONFIG_FILE_HTTPS --model-store $1 >> $2 2>&1
+  torchserve --ncs --start --ts-config $TS_CONFIG_FILE_HTTPS --model-store $1 >> $2 2>&1
   sleep 10
 }
 
