@@ -113,10 +113,10 @@ jobs:
           type: executor
       executor: << parameters.executor >>
       steps:
-        - attach-mms-workspace
-        - install-mms-server
+        - attach-torchserve-workspace
+        - install-torchserve
         - run:
-            name: Start MMS, Execute performance regression testcases, Stop MMS
+            name: Start TS, Execute performance regression testcases, Stop TS
             command: .circleci/scripts/linux_test_perf_regression.sh
         - store_artifacts:
             name: Store server logs
