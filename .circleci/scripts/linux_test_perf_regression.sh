@@ -15,12 +15,19 @@ if [ $PY_MAJOR_VER -eq 2 ]; then
   pyenv local 3.6.5 system
 fi
 
+# Install git as one of dependencies from requirements.txt needs it
+apt-get update
+apt-get install --no-install-recommends -y git
+
+# Set LANG env variable required for - test suite \ bzt
+export LANG=C.UTF-8
+
 # Install dependencies
 pip install -r requirements.txt
 pip install bzt
 
 # Execute performance test suite and store exit code
-./run_performance_suite.py -j $JMETER_PATH -e ci_linux_medium -x example* --no-compare-local --no-monit
+python run_performance_suite.py -j $JMETER_PATH -e xlarge -x example* --no-compare-local --no-monit
 EXIT_CODE=$?
 
 # Collect and store test results in result directory to be picked up by CircleCI
