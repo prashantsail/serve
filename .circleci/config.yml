@@ -71,6 +71,21 @@ jobs:
             path: result_units
             destination: units
 
+    sanity-tests:
+      parameters:
+        executor:
+          type: executor
+      executor: << parameters.executor >>
+      steps:
+        - attach-torchserve-workspace
+        - install-torchserve
+        - run:
+            name: Execute sanity tests
+            command: .circleci/scripts/linux_test_sanity.sh
+        - store_artifacts:
+            name: Store TS logs from sanity tests
+            path: logs/
+
     api-tests:
       parameters:
         executor:
