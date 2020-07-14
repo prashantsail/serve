@@ -18,7 +18,7 @@ generate_densenet_test_model_archive() {
 
 run_pytest() {
   cd $BASE_DIR/test/pytest
-  pytest . -v
+  python -m pytest -v ./
 }
 
 generate_densenet_test_model_archive $MODEL_STORE

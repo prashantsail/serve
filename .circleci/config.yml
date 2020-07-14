@@ -126,6 +126,9 @@ jobs:
         - run:
             name: Execute regression suite
             command: .circleci/scripts/linux_test_regression.sh
+        - store_artifacts:
+            name: Store server logs from regression tests
+            path: test/pytest/logs/
 
     benchmark:
       parameters:
