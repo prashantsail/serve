@@ -170,72 +170,61 @@ workflows:
           matrix: &matrix
             parameters:
               executor: ["py36"]
-#      - &modelarchiver
-#        modelarchiver:
-#          name: modelarchiver-<< matrix.executor >>
-#          matrix: *matrix
-#      - &python-tests
-#        python-tests:
-#          name: python-tests-<< matrix.executor >>
-#          requires:
-#            - build-<< matrix.executor >>
-#          matrix: *matrix
-      ####### Remove later #################################
-#      - api-tests:
-#          name: api-tests-<< matrix.executor >>
-#          requires:
-#            - build-<< matrix.executor >>
-#          matrix: *matrix
-#      - benchmark:
-#          name: benchmark-<< matrix.executor >>
-#          requires:
-#            - build-<< matrix.executor >>
-#          matrix: *matrix
-      - sanity-tests:
+      - &modelarchiver
+        modelarchiver:
+          name: modelarchiver-<< matrix.executor >>
+          matrix: *matrix
+      - &python-tests
+        python-tests:
+          name: python-tests-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
+          matrix: *matrix
+      - &sanity-tests
+        sanity-tests:
           name: sanity-tests-<< matrix.executor >>
           requires:
             - build-<< matrix.executor >>
           matrix: *matrix
-      #######################################################
 
-#  nightly:
-#    triggers:
-#      - schedule:
-#          cron: "0 0 * * *"
-#          filters:
-#            branches:
-#              only:
-#                - master
-#    jobs:
-#      - *build
-#      - *modelarchiver
-#      - *python-tests
-#      - &api-tests
-#        api-tests:
-#          name: api-tests-<< matrix.executor >>
-#          requires:
-#            - build-<< matrix.executor >>
-#          matrix: *matrix
-#
-#  weekly:
-#    triggers:
-#      - schedule:
-#          cron: "0 0 * * 0"
-#          filters:
-#            branches:
-#              only:
-#                - master
-#    jobs:
-#      - *build
-#      - benchmark:
-#          name: benchmark-<< matrix.executor >>
-#          requires:
-#            - build-<< matrix.executor >>
-#          matrix: *matrix
-#      Commented until performance regression's PR gets merged
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - *build
+      - *modelarchiver
+      - *python-tests
+      - *sanity-tests
+      - &api-tests
+        api-tests:
+          name: api-tests-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
+          matrix: *matrix
+
+  weekly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 0"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - *build
+      - benchmark:
+          name: benchmark-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
+          matrix: *matrix
+#      Uncomment once performance regression PR gets merged
 #      - performance-regression:
 #          name: performance-regression-<< matrix.executor >>
 #          requires:
 #            - build-<< matrix.executor >>
 #          matrix: *matrix
-
