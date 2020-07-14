@@ -6,15 +6,6 @@ JMETER_PATH='/opt/apache-jmeter-5.3/bin/jmeter'
 
 cd test/performance
 
-# Only on a python 2 environment -
-PY_MAJOR_VER=$(python -c 'import sys; major = sys.version_info.major; print(major);')
-if [ $PY_MAJOR_VER -eq 2 ]; then
-  # Hack to use python 3.6.5 for bzt installation and execution
-  # While MMS continues to use system python which is at 2.7.x
-  export PATH="/root/.pyenv/bin:/root/.pyenv/shims:$PATH"
-  pyenv local 3.6.5 system
-fi
-
 # Install git as one of dependencies from requirements.txt needs it
 apt-get update
 apt-get install --no-install-recommends -y git
