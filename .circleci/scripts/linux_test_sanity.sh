@@ -82,6 +82,7 @@ cleanup()
   rm -rf logs
 }
 
+mkdir model_store
 
 start_torchserve
 
