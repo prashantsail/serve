@@ -191,7 +191,7 @@ workflows:
 #          requires:
 #            - build-<< matrix.executor >>
 #          matrix: *matrix
-      - sanity-test:
+      - sanity-tests:
           name: sanity-tests-<< matrix.executor >>
           requires:
             - build-<< matrix.executor >>
