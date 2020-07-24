@@ -226,19 +226,6 @@ workflows:
           requires:
             - build-<< matrix.executor >>
           matrix: *matrix
-      # added to test nightly on different env todo remove
-      - &api-tests
-        api-tests:
-          name: api-tests-<< matrix.executor >>
-          requires:
-            - build-<< matrix.executor >>
-          matrix: *matrix
-      - &regression-tests
-        regression-tests:
-          name: regression-tests-<< matrix.executor >>
-          requires:
-            - build-<< matrix.executor >>
-          matrix: *matrix
 
   nightly:
     triggers:
