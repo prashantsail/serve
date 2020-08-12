@@ -11,8 +11,8 @@ python -m pytest --cov-report html:result_units --cov=./ model_archiver/tests/un
 PY_UNITS_EXIT_CODE=$?
 
 
-# Install model archiver module
-python setup.py bdist_wheel --universal && \
+# Build and Install model archiver module
+python setup.py bdist_wheel --release --universal && \
 pip install dist/*.whl
 MODL_ARCHVR_EXIT_CODE=$?
 
