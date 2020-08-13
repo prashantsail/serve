@@ -248,6 +248,19 @@ workflows:
           requires:
             - build-<< matrix.executor >>
           matrix: *matrix
+      ### Remove after testing
+      - &api-tests
+        api-tests:
+          name: api-tests-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
+          matrix: *matrix
+      - &regression-tests
+        regression-tests:
+          name: regression-tests-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
+          matrix: *matrix
 
   nightly:
     triggers:
