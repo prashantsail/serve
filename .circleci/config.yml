@@ -7,9 +7,9 @@ executors:
       - image: prashantsail/pytorch-serve-build
     environment:
       _JAVA_OPTIONS: "-Xmx2048m"
-  conda37:
+  conda38:
     docker:
-      - image: prashantsail/pytorch-serve-build:conda37
+      - image: prashantsail/pytorch-serve-build:conda38
     environment:
       _JAVA_OPTIONS: "-Xmx2048m"
   pyenv37:
@@ -23,6 +23,7 @@ executors:
     environment:
       _JAVA_OPTIONS: "-Xmx2048m"
 
+
 commands:
   attach-torchserve-workspace:
     description: "Attach the torchserve directory which was saved into workspace"
@@ -35,16 +36,7 @@ commands:
     steps:
       - run:
           name: Install torchserve
-          command: pip install dist/*.whl
-
-  install-torch-model-archiver:
-    description: "Install torch-model-archiver from a wheel"
-    steps:
-      - run:
-          name: Install torch-model-archiver
-          command: |
-            cd model-archiver
-            pip install dist/*.whl
+          command: .circleci/scripts/linux_install.sh
 
   exeucute-api-tests:
     description: "Execute API tests from a collection"
@@ -69,7 +61,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build Pytorch Serve
+          name: Build torchserve and torch model archiver
           command: .circleci/scripts/linux_build.sh
       - store_artifacts:
           name: Store torchserve wheel
@@ -158,7 +150,6 @@ jobs:
     steps:
       - attach-torchserve-workspace
       - install-torchserve
-      - install-torch-model-archiver
       - run:
           name: Execute regression suite
           command: .circleci/scripts/linux_test_regression.sh
@@ -212,7 +203,7 @@ jobs:
     executor: << parameters.executor >>
     steps:
       - attach-torchserve-workspace
-      - install-torch-model-archiver
+      - install-torchserve
       - run:
           name: Execute python lint, unit and integration tests
           command: .circleci/scripts/linux_test_modelarchiver.sh
@@ -232,7 +223,7 @@ workflows:
           name: build-<< matrix.executor >>
           matrix: &matrix
             parameters:
-              executor: ["py36", "conda37", "pyenv37", "venv36"]
+              executor: ["py36", "conda38", "pyenv37", "venv36"]
       - &modelarchiver-tests
         modelarchiver-tests:
           name: modelarchiver-tests-<< matrix.executor >>

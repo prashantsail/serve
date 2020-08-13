@@ -10,7 +10,7 @@ python setup.py bdist_wheel --release --universal
 MA_BUILD_EXIT_CODE=$?
 cd ../
 
-# Build on Conda if available
+# Build TS & MA on Conda if available
 (
   set -e
   if [ -x "$(command -v conda)" ]
