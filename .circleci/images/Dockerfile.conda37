@@ -20,6 +20,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
         nodejs \
     && curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
     && bash Miniconda3-latest-Linux-x86_64.sh -p /miniconda -b \
+    && conda install conda-build
     && rm Miniconda3-latest-Linux-x86_64.sh\
     && rm -rf /var/lib/apt/lists/*
 
