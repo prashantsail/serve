@@ -79,6 +79,10 @@ jobs:
           name: Store torchserve model archiver wheel
           path: model-archiver/dist
           destination: dist
+      - store_artifacts:
+          name: Store torchserve and model archiver conda builds
+          path: binaries/conda/output/noarch
+          destination: dist/conda
       - persist_to_workspace:
           root: .
           paths:
