@@ -33,9 +33,12 @@ $ ./run_circleci_tests.py regression -j api-tests -e ubuntu18-venv36-cpu-docker
 ```
 
 ###### Checklist
-> 1. Make sure docker is running before you start local execution.  
-> 2. Docker containers to have **at least 4GB RAM, 2 CPU**.  
-> 3. If you are on a network with low bandwidth, we advise you to explicitly pull the docker images -  
+> 1. Make sure you have configured "aws_access_key_id" and "aws_secret_access_key" using aws cli
+>    - 'aws configure get aws_access_key_id' - should return the access key id
+>    - 'aws configure get aws_secret_access_key' - should return the secret access key
+> 2. Make sure docker is running before you start local execution.  
+> 3. Docker containers to have **at least 4GB RAM, 2 CPU**.  
+> 4. If you are on a network with low bandwidth, we advise you to explicitly pull the docker images -  
 > docker pull 285923338299.dkr.ecr.us-east-1.amazonaws.com/torchserve-build:ubuntu18-pythn36-cpu    
 
 `To avoid Pull Request build failures on github, developers should always make sure that their local builds pass.`

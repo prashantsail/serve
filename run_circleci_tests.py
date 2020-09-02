@@ -40,7 +40,7 @@ CCI_CONFIG = {}
 PROCESSED_CONFIG = {}
 XFORMED_CONFIG = {}
 XFORMED_JOB_NAME = 'ts_xformed_job'
-BLACKLISTED_STEPS = ['persist_to_workspace', 'attach_workspace', 'store_artifacts']
+BLOCKED_STEPS = ['persist_to_workspace', 'attach_workspace', 'store_artifacts']
 
 # Read CircleCI's config
 with open(CCI_CONFIG_FILE) as fstream:
@@ -115,7 +115,7 @@ jobs_to_exec = get_jobs_to_exec(job)
 def get_jobs_steps(steps, job_name):
     """ Merge all the steps from list of jobs to execute """
     job_steps = PROCESSED_CONFIG['jobs'][job_name]['steps']
-    filtered_job_steps = list(filter(lambda step: list(step)[0] not in BLACKLISTED_STEPS, \
+    filtered_job_steps = list(filter(lambda step: list(step)[0] not in BLOCKED_STEPS, \
                                      job_steps))
     return steps + filtered_job_steps
 
@@ -145,8 +145,10 @@ for exectr, jobs in jobs_to_exec.items():
     try:
         # Locally execute the newly created job
         # This newly created job has all the steps (ordered and merged from steps in parent job(s))
-        LOCAL_EXECUTE_CMD = 'circleci local execute -c {} --job {}'.format(XFORMED_FILE, \
-                                                                           XFORMED_JOB_NAME)
+        LOCAL_EXECUTE_CMD = 'circleci local execute -c {} --job {} \
+                            --env AWS_ACCESS_KEY_ID=`aws configure get aws_access_key_id` \
+                            --env AWS_SECRET_ACCESS_KEY=`aws configure get aws_secret_access_key`'\
+                            .format(XFORMED_FILE, XFORMED_JOB_NAME)
         print('Executing command : ', LOCAL_EXECUTE_CMD)
         result_dict[exectr] = subprocess.check_call(LOCAL_EXECUTE_CMD, shell=True)
     except subprocess.CalledProcessError as err:
