@@ -4,16 +4,16 @@ version: 2.1
 executors:
   ubuntu18-pythn36-cpu-docker-medium:
     docker:
-      - image: shivamshriwas/torchserve:py36
+      - image: 285923338299.dkr.ecr.us-east-1.amazonaws.com/torchserve-build:ubuntu18-pythn36-cpu
   ubuntu18-conda38-cpu-docker-medium:
     docker:
-      - image: shivamshriwas/torchserve:conda38
+      - image: 285923338299.dkr.ecr.us-east-1.amazonaws.com/torchserve-build:ubuntu18-conda38-cpu
   ubuntu18-pyenv37-cpu-docker-medium:
     docker:
-      - image: shivamshriwas/torchserve:pyenv37
+      - image: 285923338299.dkr.ecr.us-east-1.amazonaws.com/torchserve-build:ubuntu18-pyenv37-cpu
   ubuntu18-venv36-cpu-docker-medium:
     docker:
-      - image: shivamshriwas/torchserve:venv36
+      - image: 285923338299.dkr.ecr.us-east-1.amazonaws.com/torchserve-build:ubuntu18-venv36-cpu
 
 
 commands:
