@@ -26,7 +26,7 @@ RUN curl -LO http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.s
         && rm -rf /var/lib/apt/lists/* \
         && conda install -y conda-build
 
-FROM compile-image as py36-image
+FROM compile-image as pythn36-image
 ENV PATH ~/.local/bin/:$PATH
 RUN apt-get install --no-install-recommends -y \
         python3 \
@@ -40,7 +40,7 @@ RUN apt-get install --no-install-recommends -y \
 FROM compile-image as pyenv37-image
 ENV PATH ~/.local/bin/:$PATH
 ENV PYENV_ROOT $HOME/.pyenv
-ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
+ENV PATH=${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}
 RUN apt-get install --no-install-recommends -y  libssl-dev zlib1g-dev libbz2-dev libreadline-dev \
         libsqlite3-dev libxml2-dev libxmlsec1-dev libffi-dev\
     && curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash \
@@ -50,7 +50,7 @@ RUN apt-get install --no-install-recommends -y  libssl-dev zlib1g-dev libbz2-dev
 FROM compile-image as venv36-image
 ENV PATH ~/.local/bin/:$PATH
 ENV VIRTUAL_ENV=/opt/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+ENV PATH=$VIRTUAL_ENV/bin:$PATH
 RUN apt-get install --no-install-recommends -y \
         python3 \
         python3-dev \
@@ -88,13 +88,14 @@ RUN pip install --no-cache-dir \
         pandas \
         pillow \
         psutil \
-        pylint==2.4.4 \
+        pylint \
         pytest \
         pytest-cov \
         pytest-mock \
-        sentencepiece==0.1.91 \
-        torch \
-        torchtext \
-        torchvision \
+        sentencepiece \
+        torch==1.6.0 \
+        torchaudio==0.6.0 \
+        torchtext==0.7.0 \
+        torchvision==0.7.0 \
         transformers\
         wheel
