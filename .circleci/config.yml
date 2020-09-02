@@ -215,7 +215,11 @@ workflows:
           name: build-<< matrix.executor >>
           matrix: &matrix
             parameters:
-              executor: ["ubuntu18-pythn36-cpu-docker-medium", "ubuntu18-conda38-cpu-docker-medium", "ubuntu18-pyenv37-cpu-docker-medium", "ubuntu18-venv36-cpu-docker-medium"]
+              executor:
+                - ubuntu18-pythn36-cpu-docker-medium
+                - ubuntu18-conda38-cpu-docker-medium
+                - ubuntu18-pyenv37-cpu-docker-medium
+                - ubuntu18-venv36-cpu-docker-medium
       - &modelarchiver-tests
         modelarchiver-tests:
           name: modelarchiver-tests-<< matrix.executor >>
@@ -255,14 +259,12 @@ workflows:
       - *frontend-tests
       - *python-tests
       - *sanity-tests
-      - &api-tests
-        api-tests:
+      - api-tests:
           name: api-tests-<< matrix.executor >>
           requires:
             - build-<< matrix.executor >>
           matrix: *matrix
-      - &regression-tests
-        regression-tests:
+      - regression-tests:
           name: regression-tests-<< matrix.executor >>
           requires:
             - build-<< matrix.executor >>
