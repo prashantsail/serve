@@ -215,11 +215,7 @@ workflows:
           name: build-<< matrix.executor >>
           matrix: &matrix
             parameters:
-              executor:
-                  - ubuntu18-pythn36-cpu-docker-medium
-                  - ubuntu18-conda38-cpu-docker-medium
-                  - ubuntu18-pyenv37-cpu-docker-medium
-                  - ubuntu18-venv36-cpu-docker-medium
+              executor: ["ubuntu18-pythn36-cpu-docker-medium", "ubuntu18-conda38-cpu-docker-medium", "ubuntu18-pyenv37-cpu-docker-medium", "ubuntu18-venv36-cpu-docker-medium"]
       - &modelarchiver-tests
         modelarchiver-tests:
           name: modelarchiver-tests-<< matrix.executor >>
