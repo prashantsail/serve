@@ -283,12 +283,12 @@ workflows:
     jobs:
       - *build
       - benchmark:
-        name: benchmark-<< matrix.executor >>
-        requires:
-          - build-<< matrix.executor >>
+          name: benchmark-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
         matrix: *matrix
       - performance-regression:
-        name: performance-regression-<< matrix.executor >>
-        requires:
-          - build-<< matrix.executor >>
-        matrix: *matrix
+          name: performance-regression-<< matrix.executor >>
+          requires:
+            - build-<< matrix.executor >>
+          matrix: *matrix
