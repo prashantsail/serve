@@ -216,10 +216,10 @@ workflows:
           matrix: &matrix
             parameters:
               executor:
-                - "ubuntu18-pythn36-cpu-docker-medium"
-                - "ubuntu18-conda38-cpu-docker-medium"
-                - "ubuntu18-pyenv37-cpu-docker-medium"
-                - "ubuntu18-venv36-cpu-docker-medium"
+                - ubuntu18-pythn36-cpu-docker-medium
+                - ubuntu18-conda38-cpu-docker-medium
+                - ubuntu18-pyenv37-cpu-docker-medium
+                - ubuntu18-venv36-cpu-docker-medium
       - &modelarchiver-tests
         modelarchiver-tests:
           name: modelarchiver-tests-<< matrix.executor >>
@@ -248,11 +248,11 @@ workflows:
   regression:
     triggers:
       - schedule:
-        cron: "0 0 * * *"
-        filters:
-          branches:
-            only:
-              - master
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - *build
       - *modelarchiver-tests
@@ -275,11 +275,11 @@ workflows:
   performance:
     triggers:
       - schedule:
-        cron: "0 0 * * 0"
-        filters:
-          branches:
-            only:
-              - master
+          cron: "0 0 * * 0"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - *build
       - benchmark:
