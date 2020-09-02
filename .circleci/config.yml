@@ -282,7 +282,7 @@ workflows:
           name: benchmark-<< matrix.executor >>
           requires:
             - build-<< matrix.executor >>
-        matrix: *matrix
+          matrix: *matrix
       - performance-regression:
           name: performance-regression-<< matrix.executor >>
           requires:
