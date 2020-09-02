@@ -85,3 +85,23 @@ We have published these docker images on AWS ECR
 
 Following file in the _images_ folder is used to create the docker images
 * [Dockerfile](images/Dockerfile) (This is a parameterised Dockerfile)
+
+[build_cci_image.sh](images/build_cci_image.sh) is a utility script to create docker images
+
+### To create a image run following cmd
+```
+./build_cci_image.sh
+```
+### To create a image with different env options available use `--env_type` or `-e` flag
+Available environment types are
+* `pythn36`: plain python with python 3.6.9
+* `conda38`: python 3.8 with `conda` env
+* `pyenv37`: python 3.7 with `pyenv` env
+* `venv36`: python 3.6.9 with `venv` env
+```
+./build_cci_image.sh --env_type <env-type>
+```
+### To create an image with custom tag use --tag or -t
+```
+./build_cci_image.sh --tag <tagname>
+```
