@@ -33,10 +33,6 @@ cd benchmarks
 # Set LANG env variable required by click
 # https://click.palletsprojects.com/en/5.x/python3/
 export LANG=C.UTF-8
-# Install ab and requirements
-apt-get update
-apt-get install -y apache2-utils
-pip install -r requirements-ab.txt
 # Execute soak test
 python benchmark-ab.py soak
 ABMARK_EXIT_CODE=$?
